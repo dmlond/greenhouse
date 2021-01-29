@@ -1,0 +1,13 @@
+[Unit]
+Description=Greenhouse Monitor
+Documentation=https://github.com/prometheus/node_exporter
+After=network-online.target
+
+[Service]
+User=pi
+Restart=on-failure
+
+ExecStart=/home/pi/greenhouse_monitor.py
+
+[Install]
+WantedBy=multi-user.target
