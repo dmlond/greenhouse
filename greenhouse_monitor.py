@@ -6,7 +6,7 @@ import qwiic_bme280
 import time
 import sys
 
-def instrument_metrics(temp, light):
+def instrument_metrics(light,temp):
   metrics_out = open('/home/pi/metrics.prom', 'w+')
   print('# HELP ambient_temperature temperature in fahrenheit', flush=True, file=metrics_out)
   print('# TYPE ambient_temperature gauge', flush=True, file=metrics_out)
