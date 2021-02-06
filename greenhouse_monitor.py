@@ -6,7 +6,7 @@ import qwiic_bme280
 import time
 import sys
 
-def instrument_metrics(light,temp):
+def instrument_metrics(light,temp,humidity):
   metrics_out = open('/home/pi/metrics.prom', 'w+')
   print('# HELP ambient_temperature temperature in fahrenheit', flush=True, file=metrics_out)
   print('# TYPE ambient_temperature gauge', flush=True, file=metrics_out)
@@ -14,6 +14,9 @@ def instrument_metrics(light,temp):
   print('# HELP ambient_light light in lux', flush=True, file=metrics_out)
   print('# TYPE ambient_light gauge', flush=True, file=metrics_out)
   print(f'ambient_light {light}', flush=True, file=metrics_out)
+  print('# HELP ambient_humidity humidity in %RH', flush=True, file=metrics_out)
+  print('# TYPE ambient_humidity gauge', flush=True, file=metrics_out)
+  print(f'ambient_humidity {humidity}', flush=True, file=metrics_out)
   metrics_out.close()
 
 print("Starting Greenhouse Monitor")
@@ -28,5 +31,6 @@ environment_sensor.begin()
 while True:
     light = light_sensor.read_light()
     temp = environment_sensor.temperature_fahrenheit
-    instrument_metrics(light, temp)
+    humidity = environment_sensor.humidity
+    instrument_metrics(light, temp, humidity)
     time.sleep(11)
